@@ -11,14 +11,45 @@ public class ContaCorrente
 
     public bool sacar(double valor)
     {
-        if (valor > this.saldo)
+        if (validarSaldo(valor))
         {
-            Console.WriteLine("valor de saque maior que o saldo");
-            return false;
+            this.saldo -= valor;
+            return true;
         }
+        return false;
+    }
 
-        this.saldo -= valor;
-        return true;
+    public void depositar(double valor)
+    {
+        if (valor > 0)
+        {
+            this.saldo += valor;
+        }
+        else
+        {
+            Console.WriteLine("Valor de deposito menor ou igual a zero");
+        }
+    }
+
+    public void transferir(ContaCorrente contaDestino, double valor)
+    {
+        if(validarSaldo(valor))
+        {
+            this.saldo -= valor;
+            contaDestino.saldo += valor;
+            Console.WriteLine("Transferencia realizada com sucesso");
+        }
+        else
+        {
+            Console.WriteLine("valor de transferencia invalido");
+        }
+    }
+
+    private bool validarSaldo(double valor)
+    {
+        if (valor <= this.saldo && valor > 0)
+            return true;
+        return false;
     }
     
 }
