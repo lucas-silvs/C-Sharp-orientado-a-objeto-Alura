@@ -1,9 +1,10 @@
 namespace ByteBank;
+using titular;
 
 public class ContaCorrente
 {
-    public string titular;
     public string conta;
+    public Cliente cliente;
     public int numeroAgencia;
     public string nomeAgencia;
     public double saldo;
