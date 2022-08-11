@@ -3,18 +3,124 @@ using titular;
 
 public class ContaCorrente
 {
-    public string conta;
-    public Cliente cliente;
-    public int numeroAgencia;
+    private string _conta;
+    public string Conta
+    {
+        get
+        {
+            return _conta;
+        }
+        set
+        {
+            if (!String.IsNullOrEmpty(value))
+            {
+                _conta = value;
+            }
+        }
+    }
+    
+    
+    private Cliente _cliente;
+    public Cliente Cliente
+    {
+        get
+        {
+            return _cliente;
+        }
+        set
+        {
+            if (value != null)
+            {
+                _cliente = value;
+            }
+        }
+    }
+    private int numeroAgencia;
+
+    public int NumeroAgencia
+    {
+        get
+        {
+            return numeroAgencia;
+        }
+        set
+        {
+            if (value > 0)
+            {
+                numeroAgencia = value;
+            }
+        }
+    }
+    
     public string nomeAgencia;
-    public double saldo;
+
+    public String NomeAgencia
+    {
+        get
+        {
+            return nomeAgencia;
+        }
+        set
+        {
+            if (!String.IsNullOrEmpty(value))
+            {
+                nomeAgencia = value;
+            }
+        }
+    }
+
+    private double _saldo;
+    public double Saldo
+    {
+        get
+        {
+            return _saldo;
+        }
+        set
+        {
+            if (validarSaldo(value))
+            {
+                _saldo = value;
+            }
+            
+        }
+    }
+    
+    public static int TotalContasCriadas { get; set; }
+    
+    //método construtor
+    public ContaCorrente(int numeroAgencia, String nomeAgencia, String contaCliente, Cliente dadosCliente, double saldo)
+    {
+        Cliente = dadosCliente;
+        this.nomeAgencia = nomeAgencia;
+        this.NumeroAgencia = numeroAgencia;
+        this.Conta = contaCliente;
+        this.Saldo = saldo;
+        TotalContasCriadas += 1;
+    }
+
+    //criando os métodos get e set na mão
+    // public void SetSaldo(double saldo)
+    // {
+    //     if (validarSaldo(saldo))
+    //     {
+    //         this.saldo = saldo;
+    //     }
+    // }
+    //
+    // public double GetSaldo()
+    // {
+    //     return this.saldo;
+    // }
 
 
+    //utilizando propriedades do .NET para criar o get e set
+    
     public bool sacar(double valor)
     {
         if (validarSaldo(valor))
         {
-            this.saldo -= valor;
+            Saldo -= valor;
             return true;
         }
         return false;
@@ -24,7 +130,7 @@ public class ContaCorrente
     {
         if (valor > 0)
         {
-            this.saldo += valor;
+            Saldo += valor;
         }
         else
         {
@@ -36,8 +142,8 @@ public class ContaCorrente
     {
         if(validarSaldo(valor))
         {
-            this.saldo -= valor;
-            contaDestino.saldo += valor;
+            Saldo -= valor;
+            contaDestino.Saldo += valor;
             Console.WriteLine("Transferencia realizada com sucesso");
         }
         else
@@ -48,7 +154,7 @@ public class ContaCorrente
 
     private bool validarSaldo(double valor)
     {
-        if (valor <= this.saldo && valor > 0)
+        if (valor <= Saldo && valor > 0)
             return true;
         return false;
     }
